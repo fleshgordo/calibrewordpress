@@ -22,7 +22,7 @@ class PostDialog(QDialog):
     def __init__(self, gui, icon):
         QDialog.__init__(self, gui)
 		self.setWindowTitle("Wordpress Plugin - Create new post")
-		self.resize(900,700)
+#		self.resize(900,700)
         self.gui = gui
         self.db = gui.current_db
 
@@ -84,8 +84,13 @@ class PostDialog(QDialog):
 		self.draft_button.clicked.connect(self.save_draft)
 		self.h.addWidget(self.draft_button)
 
+		self.draft_online_button = QPushButton('Save Draft online', self)
+		self.draft_online_button.setMaximumSize(QSize(150,30))
+		self.draft_online_button.clicked.connect(lambda arg=False: self.create_post(arg))
+		self.h.addWidget(self.draft_online_button)
+
 		self.post_button = QPushButton('Publish', self)
-		self.post_button.clicked.connect(self.create_post)
+		self.post_button.clicked.connect(lambda arg=True: self.create_post(arg))
 		self.h.addWidget(self.post_button)
 
 		self.l.addLayout(self.h)
@@ -106,16 +111,18 @@ class PostDialog(QDialog):
 				categorylist.append(self.category_group.id(value))
 		return categorylist
 
-	def create_post(self):
+	def create_post(self,published):
 		self.wp = self.connect()
 		if self.wp !=0:
 			self.post = WordPressPost()
 			self.post.title = str(self.msg_post_title.text())
 			self.post.description = str(self.msg_post_content.toPlainText())
 			self.post.categories = self.create_category_list()
-			returnid = self.wp.newPost(self.post, True)
+			if published == True:
+				returnid = self.wp.newPost(self.post, published)
+			else:
+				returnid = self.wp.newPost(self.post, published)
 			if returnid != 0:
-				print ("posted to wordpress")
 				self.error_dialog("Successfully posted to Wordpress!")
 				self.save_draft
 				self.close()
