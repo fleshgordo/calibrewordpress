@@ -1,0 +1,6 @@
+The Wordpress Automatic Post Plugin
+==================================
+
+Created by Fresco Gamba
+
+Requires calibre >= 0.7.53
