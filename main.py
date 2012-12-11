@@ -86,11 +86,11 @@ class PostDialog(QDialog):
 
 		self.draft_online_button = QPushButton('Save Draft online', self)
 		self.draft_online_button.setMaximumSize(QSize(150,30))
-		self.draft_online_button.clicked.connect(lambda arg=False: self.create_post(arg))
+		self.draft_online_button.clicked.connect(lambda: self.create_post(False))
 		self.h.addWidget(self.draft_online_button)
 
 		self.post_button = QPushButton('Publish', self)
-		self.post_button.clicked.connect(lambda arg=True: self.create_post(arg))
+		self.post_button.clicked.connect(lambda: self.create_post(True))
 		self.h.addWidget(self.post_button)
 
 		self.l.addLayout(self.h)
@@ -113,6 +113,7 @@ class PostDialog(QDialog):
 
 	def create_post(self,published):
 		self.wp = self.connect()
+		print(published)
 		if self.wp !=0:
 			self.post = WordPressPost()
 			self.post.title = str(self.msg_post_title.text())
@@ -120,8 +121,10 @@ class PostDialog(QDialog):
 			self.post.categories = self.create_category_list()
 			if published == True:
 				returnid = self.wp.newPost(self.post, published)
+				print("published")
 			else:
 				returnid = self.wp.newPost(self.post, published)
+				print("not published")
 			if returnid != 0:
 				self.error_dialog("Successfully posted to Wordpress!")
 				self.save_draft

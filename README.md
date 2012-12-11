@@ -22,4 +22,6 @@ Installation:
 
 Requirements:
 
-* Wordpress >
+* Wordpress > 3.5
+* XML-RPC functionality is turned on by default since WordPress 3.5.
+* Before that you needed to enable it your self. To enable, go to Settings > Writing > Remote Publishing and check the checkbox.
