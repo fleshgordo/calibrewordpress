@@ -5,11 +5,12 @@ Connect your Wordpress Blog to Calibre!
 
 Features:
 
-* Create a Wordpress blogpost from any book in your library
+* Create Wordpress blogposts from any book in your library
 * Automatic upload of cover image (if available)
 * Add torrent link (from libgen.info) to your post
 * Retrieves category list from your current blog
 * Creates automatic title and content based on metadata 
+* Save drafts locally and/or remote
 * Tested on OSx, Windows, Linux
 
 Installation:
