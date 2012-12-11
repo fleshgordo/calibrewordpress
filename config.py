@@ -20,7 +20,10 @@ prefs = JSONConfig('plugins/wordpress_plugin')
 # Set defaults
 prefs.defaults['wp_url'] = 'http://www.mydomain.com'
 prefs.defaults['wp_user'] = 'wp_username'
-prefs.defaults['wp_password'] = 'wp_password'
+secret = base64.b64encode("wp_password")
+missing = 4 - len(secret) % 4
+secret += b'='* missing
+prefs.defaults['wp_password'] = secret 
 
 prefs.defaults['draft_title'] = ''
 prefs.defaults['draft_tags'] = ''

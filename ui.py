@@ -19,6 +19,7 @@ if False:
     # You do not need this code in your plugins
     get_icons = get_resources = None
 
+PLUGIN_ICONS = ['images/icon.png']
 
 class WordpressPluginUI(InterfaceAction):
 
@@ -43,7 +44,9 @@ class WordpressPluginUI(InterfaceAction):
         # should pass a list of names to get_icons. In this case, get_icons
         # will return a dictionary mapping names to QIcons. Names that
         # are not found in the zip file will result in null QIcons.
-        icon = get_icons('images/icon.png')
+		icon_resources = self.load_resources(PLUGIN_ICONS)
+		set_plugin_icon_resources(self.name, icon_resources)
+        icon = get_icon('images/icon.png')
 
         # The qaction is automatically created from the action_spec defined
         # above
