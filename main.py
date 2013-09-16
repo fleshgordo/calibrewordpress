@@ -9,8 +9,8 @@ __docformat__ = 'restructuredtext en'
 if False:
     get_icons = get_resources = None
 
-from PyQt4.Qt import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QMessageBox, QLabel, QLineEdit, QRadioButton, QTextEdit, QColor, QCheckBox, QButtonGroup, QSize, QProgressBar
-from calibre.ebooks.metadata.sources.base import (get_cached_cover_urls, msprefs)
+from PyQt4.Qt import QDialog,  QGridLayout, QWidget, QScrollArea, QFrame, QVBoxLayout, QHBoxLayout, QPushButton, QMessageBox, QLabel, QLineEdit, QRadioButton, QTextEdit, QColor, QCheckBox, QButtonGroup, QSize, QProgressBar
+from calibre.ebooks.metadata.sources.base import (get_cached_cover_urls)
 from calibre.utils.formatter_functions import (BuiltinHasCover)
 from calibre_plugins.wordpress_plugin.wordpresslib import *
 from calibre_plugins.wordpress_plugin.urllib import urlopen
@@ -175,10 +175,22 @@ class PostDialog(QDialog):
 			# dict for button objects and category IDs
 			for cat in self.msg_categories:
 				self.categories[cat.id] = QCheckBox(cat.name,self)
+			#Content Layout 
+
+			self.scrollArea = QScrollArea() 
+			self.scrollArea.setMaximumSize(500,250) 
+			self.scrollAreaWidgetContents = QWidget(self.scrollArea)
+#self.scrollAreaWidgetContents.setMinimumSize(400, 200)
+#self.scrollArea.setWidget(self.frame)
+			self.scrollArea.setWidgetResizable(True)
+			self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+			self.scrollLayout = QGridLayout(self.scrollAreaWidgetContents)
 			# add button to dialog layout
 			for key,value in self.categories.iteritems():
 				self.category_group.addButton(value,key)
-				self.l.addWidget(value)
+				self.scrollLayout.addWidget(value)
+#self.l.addWidget(value)
+			self.l.addWidget(self.scrollArea)
 		else:
 			self.msg_categories = ""
 			
